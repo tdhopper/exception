@@ -30,5 +30,4 @@ or
 
 ## Attribution
 
-This is based on [a script](https://gist.github.com/originell/1923003) by [@
-originell](https://github.com/originell).
+This is based on [a script](https://gist.github.com/originell/1923003) by [@originell](https://github.com/originell).
