@@ -22,7 +22,8 @@ or
 from optparse import OptionParser
 import fileinput
 
-def main():
+
+def get_options():
     parser = OptionParser()
     parser.add_option('-f', '--file', dest='file',
                       help='The file to extract exceptions from',
@@ -32,12 +33,10 @@ def main():
                       help='Exclude certain exceptions from output.',
                       default="",
                       metavar='Exception,Exception,...')
-    options, args = parser.parse_args()
-
-    def is_last_line(line, first_line):
-        return not first_line and not line.startswith(" ")
+    return parser.parse_args()
 
 
+def extract_errors(options):
     bufMode = False
     buf = ''
     errors = []
@@ -54,20 +53,39 @@ def main():
             errors.append(buf)
             buf = ''
             bufMode = False
+    return errors
 
 
-    unique_errs = set(errors)
-    excludes = []
-    if options.exclude_list:
-        excludes = options.exclude_list.split(',')
+def is_last_line(line, first_line):
+    return not first_line and not line.startswith(" ")
 
-    for err in unique_errs:
+
+def exclude_errors(errors, exclude_list):
+    new_errors = []
+    excludes = exclude_list.split(',') if exclude_list else []
+    for err in errors:
         if any([excl in err for excl in excludes]):
             continue
         if err.strip() == "":
             continue
+        new_errors.append(err)
+    return new_errors
+
+
+def print_errors(errors):
+    for err in errors:
         print err
         print "---"
+
+
+def main():
+    options, args = get_options()
+
+    errors = extract_errors(options)
+    errors = set(errors) # TODO: Add flag for this
+    errors = exclude_errors(errors, options.exclude_list)
+    print_errors(errors)
+
 
 if __name__ == "__main__":
     main()
