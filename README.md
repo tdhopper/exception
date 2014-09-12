@@ -1,5 +1,9 @@
 Extract unique Python-Exceptions with their traceback from a log file.
 
+## WARNING!
+
+The extraction logic here is heuristic and may fail you. Don't depend on it for any life or death situations. Also, please submit feedback on how it could be improved!
+
 ## Installational
 
  Clone this repository and install with
