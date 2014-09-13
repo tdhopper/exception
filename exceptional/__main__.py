@@ -1,27 +1,9 @@
-"""
-Extract unique Python-Exceptions with their Traceback from a log/text file.
-
-Usage::
-
-    python exceptional -f logfile.txt
-
-Furthermore it supports excluding exceptions you don't want to have::
-
-    python exceptional -f logfile.txt -e ValueError,AttributeError
-
-Would exclude any ``ValueError`` or ``AttributeError`` from the list.
-
-The tool can also read the log file from stdout, e.g.:
-
-    cat logfile.txt | python exceptional
-
-or
-
-    cat logfile.txt | python exceptional -e ValueError
-"""
+from __future__ import print_function
 from optparse import OptionParser
 import fileinput
 
+MAX_LINE_LENGTH = 400
+DELIMETER_LENGTH = 80
 
 def get_options():
     parser = OptionParser()
@@ -38,53 +20,47 @@ def get_options():
 
 def extract_errors(options):
     bufMode = False
-    buf = ''
-    errors = []
+    error = ''
+    last_error = ''
     for line in fileinput.input(options.file):
         first_line = line.startswith("Traceback (most recent call last):")
         if first_line:
             bufMode = True
         if bufMode:
             # Truncate lines longer than 400 characters.
-            if len(line) > 400:
-                line = line[:400]+'...\n'
-            buf += line
-        if bufMode and line and is_last_line(line, first_line):
-            errors.append(buf)
-            buf = ''
-            bufMode = False
-    return errors
+            if len(line) > MAX_LINE_LENGTH:
+                line = line[:MAX_LINE_LENGTH]+'...\n'
+            error += line
+            if line and is_last_line(line, first_line):
+                bufMode = False
+                if exclude_error(error, last_error, options.exclude_list):
+                    last_error = error
+                    continue
+                else:
+                    print(error)
+                    print(DELIMETER_LENGTH * "-")
+                    last_error = error
 
 
 def is_last_line(line, first_line):
     return not first_line and not line.startswith(" ")
 
 
-def exclude_errors(errors, exclude_list):
-    new_errors = []
+def exclude_error(error, last_error, exclude_list):
     excludes = exclude_list.split(',') if exclude_list else []
-    for err in errors:
-        if any([excl in err for excl in excludes]):
-            continue
-        if err.strip() == "":
-            continue
-        new_errors.append(err)
-    return new_errors
-
-
-def print_errors(errors):
-    for err in errors:
-        print err
-        print "---"
+    if any([excl in error for excl in excludes]):
+        return True
+    elif error.strip() == "":
+        return True
+    elif error == last_error:
+        return True
+    else:
+        return False
 
 
 def main():
     options, args = get_options()
-
-    errors = extract_errors(options)
-    errors = set(errors) # TODO: Add flag for this
-    errors = exclude_errors(errors, options.exclude_list)
-    print_errors(errors)
+    extract_errors(options)
 
 
 if __name__ == "__main__":
