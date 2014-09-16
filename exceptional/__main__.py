@@ -19,31 +19,36 @@ def get_options():
 
 
 def extract_errors(options):
-    bufMode = False
+    buffer_on = False
     error = ''
     last_error = ''
     for line in fileinput.input(options.file):
-        first_line = line.startswith("Traceback (most recent call last):")
-        if first_line:
-            bufMode = True
-        if bufMode:
+        if is_first_line(line):
+            buffer_on = True
+            first_line = line
+        if buffer_on:
             # Truncate lines longer than 400 characters.
             if len(line) > MAX_LINE_LENGTH:
                 line = line[:MAX_LINE_LENGTH]+'...\n'
             error += line
             if line and is_last_line(line, first_line):
-                bufMode = False
+                buffer_on = False
                 if exclude_error(error, last_error, options.exclude_list):
                     last_error = error
+                    error = ''
                     continue
                 else:
-                    print(error)
-                    print(DELIMETER_LENGTH * "-")
+                    yield error
                     last_error = error
+                    error = ''
+
+
+def is_first_line(line):
+    return line.startswith("Traceback (most recent call last):")
 
 
 def is_last_line(line, first_line):
-    return not first_line and not line.startswith(" ")
+    return (line != first_line) and not line.startswith(" ")
 
 
 def exclude_error(error, last_error, exclude_list):
@@ -57,10 +62,14 @@ def exclude_error(error, last_error, exclude_list):
     else:
         return False
 
+def print_error(error):
+    print(error)
+    print(DELIMETER_LENGTH * "-")
 
 def main():
     options, args = get_options()
-    extract_errors(options)
+    for error in extract_errors(options):
+        print_error(error)
 
 
 if __name__ == "__main__":
