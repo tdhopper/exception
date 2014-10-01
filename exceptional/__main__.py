@@ -1,17 +1,20 @@
 from __future__ import print_function
-from optparse import OptionParser
+from argparse import ArgumentParser
 import fileinput
 
+# SETTINGS
 MAX_LINE_LENGTH = 400
-DELIMETER_LENGTH = 80
+DELIMETER_LENGTH = 40
+
 
 def get_options():
-    parser = OptionParser()
-    parser.add_option('-f', '--file', dest='file',
+    parser = ArgumentParser()
+    parser.add_argument('-f', '--file', dest='file',
                       help='The file to extract exceptions from',
-                      default="-",
-                      metavar='FILE')
-    parser.add_option('-e', '--exclude', dest='exclude_list',
+                      metavar='FILE',
+                      nargs='+',
+                      type=str)
+    parser.add_argument('-e', '--exclude', dest='exclude_list',
                       help='Exclude certain exceptions from output.',
                       default="",
                       metavar='Exception,Exception,...')
@@ -38,7 +41,7 @@ def extract_errors(options):
                     error = ''
                     continue
                 else:
-                    yield error
+                    yield fileinput.filename(), error
                     last_error = error
                     error = ''
 
@@ -62,13 +65,16 @@ def exclude_error(error, last_error, exclude_list):
     else:
         return False
 
+
 def print_error(error):
     print(error)
     print(DELIMETER_LENGTH * "-")
 
+
 def main():
-    options, args = get_options()
-    for error in extract_errors(options):
+    options = get_options()
+    for filename, error in extract_errors(options):
+        print("### %s ###\n" % filename) # TODO: add a flag for this
         print_error(error)
 
 

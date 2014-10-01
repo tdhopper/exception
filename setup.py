@@ -13,7 +13,7 @@ setup(
     license = "MIT",
     packages = ['exceptional'],
     long_description = read('README.md'),
-    install_requires = [],
+    install_requires = ['argparse'],
     entry_points = {
                         'console_scripts': [
                             'exceptional = exceptional.__main__:main'
