@@ -16,11 +16,15 @@ This adds a utility called `exceptional` or `exceptional.exe` to your path.
 
 To extract the Python tracebacks from a log called _logfile.txt_, run:
 
-    $ exceptional logfile.txt
+    $ exceptional -f logfile.txt
 
 If you want to exclude certain exceptions, try:
 
     $ exceptional -f logfile.txt -e ValueError,AttributeError
+
+You can all pass multiple filenames:
+
+    $ exceptional -f logfile1.txt logfile2.txt
 
 This would exclude would exclude any ``ValueError`` or ``AttributeError`` tracebacks from the output.
 
