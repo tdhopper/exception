@@ -67,4 +67,3 @@ def test_deduplicate(simple_traceback):
     out = [error for filename, error in errors]
     assert len(out) == 1
     assert "".join(simple_traceback.split('\n')) == out[0]
-
