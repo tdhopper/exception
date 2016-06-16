@@ -18,28 +18,28 @@ test_requirements = [
 ]
 
 setup(
-    name='exceptional',
+    name='exception',
     version='0.1.0',
     description="Extract unique Python exceptions with their traceback from a log file. ",
     long_description=readme + '\n\n' + history,
     author="Timothy Hopper",
     author_email='tdhopper@gmail.com',
-    url='https://github.com/tdhopper/exceptional',
+    url='https://github.com/tdhopper/exception',
     packages=[
-        'exceptional',
+        'exception',
     ],
-    package_dir={'exceptional':
-                 'exceptional'},
+    package_dir={'exception':
+                 'exception'},
     entry_points={
         'console_scripts': [
-            'exceptional=exceptional.cli:main'
+            'exception=exception.cli:main'
         ]
     },
     include_package_data=True,
     install_requires=requirements,
     license="MIT license",
     zip_safe=False,
-    keywords='exceptional',
+    keywords='exception',
     classifiers=[
         'Development Status :: 2 - Pre-Alpha',
         'Intended Audience :: Developers',

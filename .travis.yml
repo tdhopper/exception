@@ -2,7 +2,7 @@
 deploy:
   true:
     condition: $TOXENV == py27
-    repo: tdhopper/exceptional
+    repo: tdhopper/exception
     tags: false
   distributions: sdist
   password:

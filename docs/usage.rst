@@ -2,6 +2,6 @@
 Usage
 =====
 
-To use exceptional in a project::
+To use exception in a project::
 
-    import exceptional
+    import exception

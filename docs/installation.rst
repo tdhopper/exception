@@ -8,13 +8,13 @@ Installation
 Stable release
 --------------
 
-To install exceptional, run this command in your terminal:
+To install exception, run this command in your terminal:
 
 .. code-block:: console
 
-    $ pip install exceptional
+    $ pip install exception
 
-This is the preferred method to install exceptional, as it will always install the most recent stable release. 
+This is the preferred method to install exception, as it will always install the most recent stable release.
 
 If you don't have `pip`_ installed, this `Python installation guide`_ can guide
 you through the process.
@@ -26,19 +26,19 @@ you through the process.
 From sources
 ------------
 
-The sources for exceptional can be downloaded from the `Github repo`_.
+The sources for exception can be downloaded from the `Github repo`_.
 
 You can either clone the public repository:
 
 .. code-block:: console
 
-    $ git clone git://github.com/tdhopper/exceptional
+    $ git clone git://github.com/tdhopper/exception
 
 Or download the `tarball`_:
 
 .. code-block:: console
 
-    $ curl  -OL https://github.com/tdhopper/exceptional/tarball/master
+    $ curl  -OL https://github.com/tdhopper/exception/tarball/master
 
 Once you have a copy of the source, you can install it with:
 
@@ -47,5 +47,5 @@ Once you have a copy of the source, you can install it with:
     $ python setup.py install
 
 
-.. _Github repo: https://github.com/tdhopper/exceptional
-.. _tarball: https://github.com/tdhopper/exceptional/tarball/master
+.. _Github repo: https://github.com/tdhopper/exception
+.. _tarball: https://github.com/tdhopper/exception/tarball/master

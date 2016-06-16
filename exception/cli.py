@@ -5,7 +5,7 @@ import fileinput
 
 from argparse import ArgumentParser
 
-from .exceptional import extract_errors, print_error
+from .exception import extract_errors, print_error
 
 
 def get_options():
