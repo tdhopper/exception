@@ -24,6 +24,7 @@ def simple_traceback():
   File "<stdin>", line 1, in <module>
 ZeroDivisionError: integer division or modulo by zero"""
 
+
 @pytest.fixture
 def simple_traceback_buffer():
     return six.StringIO("""Traceback (most recent call last):
@@ -54,3 +55,16 @@ def test_file(simple_traceback, simple_traceback_buffer):
     out = [error for filename, error in errors]
     assert len(out) == 1
     assert "".join(simple_traceback) == out[0]
+
+
+def test_deduplicate(simple_traceback):
+    exception.fileinput = Mock()
+    exception.fileinput.filename = lambda: "X"
+
+    traceback = "{}\n{}".format(simple_traceback, simple_traceback)
+
+    errors = exception.extract_errors(traceback.split("\n"))
+    out = [error for filename, error in errors]
+    assert len(out) == 1
+    assert "".join(simple_traceback.split('\n')) == out[0]
+
