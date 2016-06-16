@@ -2,13 +2,13 @@
 deploy:
   true:
     condition: $TOXENV == py27
-    repo: audreyr/python_boilerplate
+    repo: tdhopper/exceptional
     tags: true
   distributions: sdist
   password:
     secure: cZcbGym50HJ1/mxLQ7kFzHnbhDA+Z5qRl7TVI0ogxr3Ein40TJlO08dVWzPtQvXtX7GWQx48Pn+Jl9UmpMBldXoMeJtYacVbbsrJ4KY9KH3yVmsjy/w2THBlizjj9ZQjYCjsJ8hAdKpXkXaVE/WzfIrc+7M4eIvqFNtTPHlQwkU=
   provider: pypi
-  user: audreyr
+  user: tdhopper
 env:
 - TOXENV=py27
 - TOXENV=py33
