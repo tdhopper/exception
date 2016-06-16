@@ -3,7 +3,7 @@ deploy:
   true:
     condition: $TOXENV == py27
     repo: tdhopper/exceptional
-    tags: true
+    tags: false
   distributions: sdist
   password:
     secure: cZcbGym50HJ1/mxLQ7kFzHnbhDA+Z5qRl7TVI0ogxr3Ein40TJlO08dVWzPtQvXtX7GWQx48Pn+Jl9UmpMBldXoMeJtYacVbbsrJ4KY9KH3yVmsjy/w2THBlizjj9ZQjYCjsJ8hAdKpXkXaVE/WzfIrc+7M4eIvqFNtTPHlQwkU=
