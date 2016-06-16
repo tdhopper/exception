@@ -87,3 +87,27 @@ def test_deduplicate(mock_filename, simple_traceback):
     out = [error for filename, error in errors]
     assert len(out) == 1
     assert "".join(simple_traceback.split('\n')) == out[0]
+
+
+def test_cli():
+    from subprocess import check_output
+    result = check_output(["exception", "-f", "tests/fixtures/real_log.log"])
+
+    true = """### tests/fixtures/real_log.log ###
+
+Traceback (most recent call last):
+  File "local/lib/python2.7/site-packages/pykafka/cluster.py", line 242, in _request_metadata
+    ssl_config=self._ssl_config)
+  File "local/lib/python2.7/site-packages/pykafka/broker.py", line 97, in __init__
+    self.connect()
+  File "local/lib/python2.7/site-packages/pykafka/broker.py", line 211, in connect
+    self._connection.connect(self._socket_timeout_ms)
+  File "local/lib/python2.7/site-packages/pykafka/connection.py", line 169, in connect
+    (self.source_host, self.source_port)
+  File "/usr/lib/python2.7/socket.py", line 571, in create_connection
+    raise err
+error: [Errno 111] Connection refused
+
+----------------------------------------
+"""
+    assert result == true
