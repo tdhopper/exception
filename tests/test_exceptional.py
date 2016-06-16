@@ -13,8 +13,6 @@ Tests for `exception` module.
 """
 import pytest
 
-from mock import Mock
-
 from exception import exception
 
 
@@ -91,7 +89,7 @@ def test_deduplicate(mock_filename, simple_traceback):
 
 def test_cli():
     from subprocess import check_output
-    result = check_output(["exception", "-f", "tests/fixtures/real_log.log"])
+    result = check_output(["exception", "-f", "./tests/fixtures/real_log.log"])
 
     true = """### tests/fixtures/real_log.log ###
 
