@@ -89,9 +89,11 @@ def test_deduplicate(mock_filename, simple_traceback):
 
 def test_cli():
     from subprocess import check_output
-    result = check_output(["exception", "-f", "./tests/fixtures/real_log.log"])
+    import os
+    root = os.path.dirname(__file__)
+    result = check_output(["exception", "-f", "{}/fixtures/real_log.log".format(root)])
 
-    true = """### tests/fixtures/real_log.log ###
+    true = """### /Users/tdhopper/repos/exception/tests/fixtures/real_log.log ###
 
 Traceback (most recent call last):
   File "local/lib/python2.7/site-packages/pykafka/cluster.py", line 242, in _request_metadata
