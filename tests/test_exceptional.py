@@ -6,6 +6,8 @@ from __future__ import absolute_import, print_function
 import six
 import os
 
+from subprocess import check_output
+
 """
 test_exception
 ----------------------------------
@@ -89,8 +91,6 @@ def test_deduplicate(mock_filename, simple_traceback):
 @pytest.mark.skipif(os.environ.get('TRAVIS') is not None, reason="Can't get path to work on Travis")
 def test_cli():
     print(os.environ)
-    from subprocess import check_output
-    import os
     root = os.path.dirname(__file__)
     result = check_output(["exception", "-f", "{}/fixtures/real_log.log".format(root)])
 
