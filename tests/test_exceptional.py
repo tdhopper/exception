@@ -4,6 +4,7 @@
 from __future__ import absolute_import, print_function
 
 import six
+import os
 
 """
 test_exception
@@ -87,13 +88,14 @@ def test_deduplicate(mock_filename, simple_traceback):
     assert "".join(simple_traceback.split('\n')) == out[0]
 
 
+@pytest.mark.skipif(os.environ.get('TRAVIS'), reason="Can't get path to work on Travis")
 def test_cli():
     from subprocess import check_output
     import os
     root = os.path.dirname(__file__)
     result = check_output(["exception", "-f", "{}/fixtures/real_log.log".format(root)])
 
-    true = """### /Users/tdhopper/repos/exception/tests/fixtures/real_log.log ###
+    true = """### {}/fixtures/real_log.log ###
 
 Traceback (most recent call last):
   File "local/lib/python2.7/site-packages/pykafka/cluster.py", line 242, in _request_metadata
@@ -109,5 +111,5 @@ Traceback (most recent call last):
 error: [Errno 111] Connection refused
 
 ----------------------------------------
-"""
+""".format(root)
     assert result == true
