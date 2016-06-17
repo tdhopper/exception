@@ -86,7 +86,7 @@ def test_deduplicate(mock_filename, simple_traceback):
     assert "".join(simple_traceback.split('\n')) == out[0]
 
 
-@pytest.mark.skipif(os.environ.get('TRAVIS'), reason="Can't get path to work on Travis")
+@pytest.mark.skipif(os.environ.get('TRAVIS', None) != None, reason="Can't get path to work on Travis")
 def test_cli():
     from subprocess import check_output
     import os
