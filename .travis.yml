@@ -19,4 +19,6 @@ install:
 language: python
 python: 3.5
 script:
+- printenv
+- echo $PWD
 - tox
