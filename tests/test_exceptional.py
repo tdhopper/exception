@@ -38,9 +38,7 @@ def mock_filename(mocker):
 
 
 def test_trivial(mock_filename, simple_traceback):
-    """Checks that a simple example is fine"""
-
-
+    """Check that a simple example is fine"""
     errors = exception.extract_errors(simple_traceback.split("\n"))
     out = [error for filename, error in errors]
     assert len(out) == 1
@@ -66,7 +64,7 @@ def test_file(mock_filename, simple_traceback, simple_traceback_buffer):
 
 
 def test_multiple_exceptions(mock_filename, simple_traceback):
-    """Extracts two exeptions from a string"""
+    """Extract two exceptions from a string"""
     trace1 = simple_traceback
     trace2 = simple_traceback.replace("ZeroDivisionError", "ValueError")
 
